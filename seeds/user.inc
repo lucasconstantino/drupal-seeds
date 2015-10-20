@@ -42,7 +42,7 @@ function seeds_user_seed_create($data = array()) {
 /**
  * Remove a user seed.
  */
-function seeds_user_seed_create($data = array(), $value = array(), $config = array()) {
+function seeds_user_seed_remove($data = array(), $value = array(), $config = array()) {
   if ($user = _seeds_user_find($value)) {
     _user_cancel(array(), $user, !empty($config['remove']['method']) ? $config['remove']['method'] : 'user_cancel_delete');
     return TRUE;
