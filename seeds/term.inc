@@ -8,7 +8,7 @@
 /**
  * Create a term seed.
  */
-function seeds_term_create($data = array()) {
+function seeds_term_seed_create($data = array()) {
 
   $map_properties = array(
     'type' => 'vid',
@@ -49,7 +49,7 @@ function seeds_term_create($data = array()) {
 /**
  * Remove a term seed.
  */
-function seeds_term_remove($data = array(), $value = array()) {
+function seeds_term_seed_remove($data = array(), $value = array()) {
   $term = _seeds_term_find($value);
   return taxonomy_term_delete($term->tid) == 3;
 }

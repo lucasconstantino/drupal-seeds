@@ -8,7 +8,7 @@
 /**
  * Create a node seed.
  */
-function seeds_node_create($data = array()) {
+function seeds_node_seed_create($data = array()) {
   $info = field_info_instances('node');
 
   // Defaults.
@@ -45,7 +45,7 @@ function seeds_node_create($data = array()) {
 /**
  * Remove a node seed.
  */
-function seeds_node_remove($data = array(), $value = array()) {
+function seeds_node_seed_remove($data = array(), $value = array()) {
   $node = _seeds_node_find($value);
   if (!empty($node)) {
     node_delete($node->nid);
