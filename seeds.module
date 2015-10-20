@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @file
+ * Code for the Seeds module.
+ */
+
+define('SEEDS_API_VERSION', '0.1.0');
+
+/**
+ * Implements hook_menu().
+ */
+function seeds_menu() {
+  $items['seeds/touch'] = array(
+    'page callback' => 'seeds_touch',
+    'page arguments' => array(),
+    'access callback' => TRUE,
+  );
+
+  $items['seeds/%/%'] = array(
+    'page callback' => 'seeds_router',
+    'page arguments' => array(1, 2),
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Seeds touch menu callback.
+ */
+function seeds_touch() {
+  print 'seeds@' . SEEDS_API_VERSION;
+  drupal_exit();
+}
+
+/**
+ * Seeds router menu callback.
+ */
+function seeds_router($type, $action) {
+  // Make sure to perform any action as admin, to avoid
+  // interference from configured flows such as rules.
+  global $user;
+  $previous_user = array('uid' => $user->uid);
+  $admin = array('uid' => '1');
+  user_login_submit(array(), $admin);
+
+  // Try to find the seed file.
+  module_load_include('inc', 'seeds', 'seeds/' . $type);
+
+  // Execute seed operation.
+  $function = 'seeds_' . str_replace('-', '_', $type) . '_' . $action;
+  if (function_exists($function)) {
+    $data = empty($_POST['data']) ? array() : $_POST['data'];
+    $value = empty($_POST['value']) ? array() : $_POST['value'];
+    $config = empty($_POST['config']) ? array() : $_POST['config'];
+    $result = $function($data, $value, $config);
+
+    drupal_json_output($result);
+  }
+
+  // Retrieve previous user state.
+  user_login_submit(array(), $previous_user);
+
+  drupal_exit();
+}
