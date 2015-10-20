@@ -1,10 +1,10 @@
 {
   "name": "drupal-seeds",
   "version": "0.1.0",
-  "description": "Drupal seeding module + JavaScript API.",
-  "main": "seeds-js/index.js",
+  "description": "Drupal seeding module + JavaScript API for momentary assets.",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp test"
   },
   "keywords": [
     "drupal",
@@ -12,5 +12,16 @@
     "api"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "async": "^1.4.2",
+    "common-errors": "^0.5.3",
+    "continuation-local-storage": "^3.1.4",
+    "extend": "^3.0.0",
+    "inherits": "^2.0.1",
+    "q": "^1.4.1",
+    "request-promise": "^1.0.1",
+    "shortid": "^2.2.4",
+    "traverse": "^0.6.6"
+  }
 }
