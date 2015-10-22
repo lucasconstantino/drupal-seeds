@@ -36,7 +36,9 @@ function seeds_user_seed_create($data = array()) {
     return $existing_user;
   }
 
-  return user_save('', $data);
+  // Load user after save to make sure we have the most up to date user object.
+  $new_user = user_save('', $data);
+  return user_load($new_user->uid, TRUE);
 }
 
 /**
