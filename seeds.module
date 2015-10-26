@@ -88,15 +88,21 @@ function seeds_router($type, $action) {
     $value = empty($_POST['value']) ? array() : $_POST['value'];
     $config = empty($_POST['config']) ? array() : $_POST['config'];
 
+    $context = array(
+      'data' => &$data,
+      'value' => &$value,
+      'config' => &$config,
+    );
+
     // Allow for late modification of settings.
-    drupal_alter('seeds_seed_' . $action, $data, $value, $config, $type);
-    drupal_alter('seeds_seed_' . $type . '_' . $action, $data, $value, $config, $type);
+    drupal_alter('seeds_seed_' . $action, $context, $type);
+    drupal_alter('seeds_seed_' . $type . '_' . $action, $context, $type);
 
     $result = $info[$type][$action]($data, $value, $config);
 
     // Allow for result modification.
-    drupal_alter('seeds_seed_' . $action . '_result', $result, $type);
-    drupal_alter('seeds_seed_' . $type . '_' . $action . '_result', $result, $type);
+    drupal_alter('seeds_seed_' . $action . '_result', $result, $context, $type);
+    drupal_alter('seeds_seed_' . $type . '_' . $action . '_result', $result, $context, $type);
 
     drupal_json_output($result);
 
